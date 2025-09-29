@@ -1,0 +1,62 @@
+```java
+import java.io.*;
+import java.util.Scanner;
+
+public class Studentfile {
+    static final String FILE_NAME = "students.txt";
+
+    public static void main(String[] args) throws Exception {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("1. Create Records");
+        System.out.println("2. Read Records");
+        System.out.println("3. Append Record");
+        System.out.print("Enter your choice: ");
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1: createRecords(sc); break;
+            case 2: readRecords(); break;
+            case 3: appendRecord(sc); break;
+            default: System.out.println("Invalid choice!");
+        }
+    }
+    static void createRecords(Scanner sc) throws Exception {
+        FileWriter fw = new FileWriter(FILE_NAME);
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        System.out.print("Enter Roll No: ");
+        String roll = sc.next();
+        System.out.print("Enter Name: ");
+        String name = sc.next();
+        bw.write(roll + "," + name);
+        bw.newLine();
+
+        bw.close();
+        System.out.println("Record created successfully.");
+    }
+    static void readRecords() throws Exception {
+        BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
+        String line;
+        System.out.println("\n--- Student Records ---");
+        while ((line = br.readLine()) != null) {
+            String[] data = line.split(",");
+            System.out.println("Roll: " + data[0] + " | Name: " + data[1]);
+        }
+        br.close();
+    }
+    static void appendRecord(Scanner sc) throws Exception {
+        FileWriter fw = new FileWriter(FILE_NAME, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        System.out.print("Enter Roll No: ");
+        String roll = sc.next();
+        System.out.print("Enter Name: ");
+        String name = sc.next();
+        bw.write(roll + "," + name);
+        bw.newLine();
+
+        bw.close();
+        System.out.println("Record appended successfully.");
+    }
+}
